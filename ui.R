@@ -22,7 +22,6 @@ library(kableExtra)
 library(gridExtra)
 library(shinyjs)
 
-
 # pkgs
 suppressPackageStartupMessages(library(shiny))
 
