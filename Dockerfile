@@ -32,14 +32,6 @@ RUN apt-get update && \
 # copy necessary files
 ## app folder
 COPY /app ./app
-COPY *.Rproj /srv/shiny-server/
-COPY *.R /srv/shiny-server/
-COPY *.Rmd /srv/shiny-server/
-COPY *.json /srv/shiny-server/
-COPY *.md /srv/shiny-server/
-COPY *.css /srv/shiny-server/
-COPY input_data /srv/shiny-server/input_data
-COPY www /srv/shiny-server/www
 
 ## renv.lock file
 COPY /renv.lock ./renv.lock
