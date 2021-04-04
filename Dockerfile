@@ -32,13 +32,6 @@ RUN apt-get update && \
 # copy necessary files
 ## app folder
 COPY /app ./app
-COPY *.R ./app
-COPY *.Rmd ./app
-COPY *.json ./app
-COPY *.md ./app
-COPY *.css ./app
-COPY input_data ./app/input_data
-COPY www ./app/www
 
 ## renv.lock file
 COPY /renv.lock ./renv.lock
