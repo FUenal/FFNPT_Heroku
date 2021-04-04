@@ -13,9 +13,9 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.6.8
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "fossil-fuel-tracker"
+          heroku_app_name: "peaceful-sea-41551"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          healthcheck: "https://fossil-fuel-tracker.herokuapp.com/"
+          healthcheck: "https://peaceful-sea-41551.herokuapp.com/"
           usedocker: true
           delay: 60
           rollbackonhealthcheckfailed: true
