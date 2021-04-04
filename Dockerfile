@@ -31,6 +31,7 @@ RUN apt-get update && \
 
 # copy necessary files
 ## app folder
+COPY /app ./app
 COPY *.Rproj /srv/shiny-server/
 COPY *.R /srv/shiny-server/
 COPY *.Rmd /srv/shiny-server/
