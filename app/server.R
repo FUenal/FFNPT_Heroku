@@ -451,7 +451,7 @@ basemap = leaflet(plot_map) %>%
                   title = "Fossil fuels<br/>(% sub energy)<br/>2019") %>%  
         
         addPolygons(stroke = FALSE, smoothFactor = 0.4, fillOpacity = 0.65, fillColor = ~cv_pal(country_overview_large$ff_share_2019_cat),
-                    label = sprintf("<strong>%s</strong><br/><small>Fossil-Fuels Sub Energy: %s </small><br/><small>Climate Risk Index: %s</small><br/><small>Total no. of policies: %g</small>", 
+                    label = sprintf("<strong>%s</strong><br/><small>Fossil-Fuels Sub Energy: %s </small><br/><small>Climate Risk Index: %s</small><br/><small>Total number of policies: %g</small>", 
                                     country_overview_large$Country, country_overview_large$ff_share_2019_cat, country_overview_large$cri, country_overview_large$Policy_total) %>% 
                             lapply(htmltools::HTML),
                     labelOptions = labelOptions(
