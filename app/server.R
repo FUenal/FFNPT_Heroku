@@ -300,29 +300,29 @@ coal_production <- coal_production %>% mutate_at(1, function(t) {
 # write country_overview_large file
 write.csv(country_overview_large, file = "input_data/country_overview_large.csv")
 
-### DATA PROCESSING: Policies converting Year from numeric to date format###
-moratoria_bans_limits$Date <-lubridate::ymd(moratoria_bans_limits$Start, truncated = 2L)
-subsidy_removal$Date <-lubridate::ymd(subsidy_removal$Start, truncated = 2L)
-divestment$Date <-lubridate::ymd(divestment$Start, truncated = 2L)
-
-# extract dates from moratoria_bans_limits data
-moratoria_bans_limits$date = as.Date(moratoria_bans_limits$Date, format="%d/%m/%Y")
-moratoria_bans_limits_min_date = min(moratoria_bans_limits$date)
-moratoria_bans_limits_max_date = max(moratoria_bans_limits$date)
-moratoria_bans_limits_max_date_clean = format(as.POSIXct(moratoria_bans_limits_max_date),"%d/%m/%Y")
-
-# extract dates from subsidy removaldata
-subsidy_removal$date = as.Date(subsidy_removal$Date, format="%d/%m/%Y")
-subsidy_removal_min_date = min(subsidy_removal$date)
-subsidy_removal_max_date = max(subsidy_removal$date)
-subsidy_removal_max_date_clean = format(as.POSIXct(subsidy_removal_max_date),"%d/%m/%Y")
-
-# extract dates from divestment data
-divestment$date = as.Date(divestment$Date, format="%d/%m/%Y")
-divestment_min_date = min(divestment$date)
-divestment_max_date = max(divestment$date)
-divestment_max_date_clean = format(as.POSIXct(divestment_max_date),"%d/%m/%Y")
-
+# ### DATA PROCESSING: Policies converting Year from numeric to date format###
+# moratoria_bans_limits$Date <-lubridate::ymd(moratoria_bans_limits$Start, truncated = 2L)
+# subsidy_removal$Date <-lubridate::ymd(subsidy_removal$Start, truncated = 2L)
+# divestment$Date <-lubridate::ymd(divestment$Start, truncated = 2L)
+# 
+# # extract dates from moratoria_bans_limits data
+# moratoria_bans_limits$date = as.Date(moratoria_bans_limits$Date, format="%d/%m/%Y")
+# moratoria_bans_limits_min_date = min(moratoria_bans_limits$date)
+# moratoria_bans_limits_max_date = max(moratoria_bans_limits$date)
+# moratoria_bans_limits_max_date_clean = format(as.POSIXct(moratoria_bans_limits_max_date),"%d/%m/%Y")
+# 
+# # extract dates from subsidy removaldata
+# subsidy_removal$date = as.Date(subsidy_removal$Date, format="%d/%m/%Y")
+# subsidy_removal_min_date = min(subsidy_removal$date)
+# subsidy_removal_max_date = max(subsidy_removal$date)
+# subsidy_removal_max_date_clean = format(as.POSIXct(subsidy_removal_max_date),"%d/%m/%Y")
+# 
+# # extract dates from divestment data
+# divestment$date = as.Date(divestment$Date, format="%d/%m/%Y")
+# divestment_min_date = min(divestment$date)
+# divestment_max_date = max(divestment$date)
+# divestment_max_date_clean = format(as.POSIXct(divestment_max_date),"%d/%m/%Y")
+# 
 ### DATA PROCESSING: Fossil Fuel Production (gas, coal, and oil) converting Year from numeric to date format###
 oil_production$Date <-lubridate::ymd(oil_production$Year, truncated = 2L)
 gas_production$Date <-lubridate::ymd(gas_production$Year, truncated = 2L)
@@ -346,76 +346,76 @@ coal_production_min_date = min(coal_production$date)
 coal_production_max_date = max(coal_production$date)
 coal_production_max_date_clean = format(as.POSIXct(coal_production_max_date),"%d/%m/%Y")
 
-#Set Main Plot output
-policy_count = function(country_overview_large){
-        x <- sum(country_overview_large$Policy_total)
-        print(x)
-}
-
-mbl_count = function(country_overview_large){
-        x <- sum(country_overview_large$Moratoria_bans_limits_total)
-        x
-}
-
-sr_count = function(country_overview_large){
-        x <- sum(country_overview_large$Subsidy_removal_total)
-        x
-}
-
-div_count = function(country_overview_large){
-        x <- sum(country_overview_large$Divestment_total)
-        x
-}
-
-gov_pol_count = function(country_overview_large){
-        x <- sum(country_overview_large$Government_policies_total)
-        x
-}
-
-Non_gov_pol_count = function(country_overview_large){
-        x <- sum(country_overview_large$Non_Government_policies_total)
-        x
-}
+# #Set Main Plot output
+# policy_count = function(country_overview_large){
+#         x <- sum(country_overview_large$Policy_total)
+#         print(x)
+# }
+# 
+# mbl_count = function(country_overview_large){
+#         x <- sum(country_overview_large$Moratoria_bans_limits_total)
+#         x
+# }
+# 
+# sr_count = function(country_overview_large){
+#         x <- sum(country_overview_large$Subsidy_removal_total)
+#         x
+# }
+# 
+# div_count = function(country_overview_large){
+#         x <- sum(country_overview_large$Divestment_total)
+#         x
+# }
+# 
+# gov_pol_count = function(country_overview_large){
+#         x <- sum(country_overview_large$Government_policies_total)
+#         x
+# }
+# 
+# Non_gov_pol_count = function(country_overview_large){
+#         x <- sum(country_overview_large$Non_Government_policies_total)
+#         x
+# }
 
 ### MAP FUNCTIONS ###
-# function to plot cumulative Moratoria, Bans, and Limit Policies by date
-cumulative_mbl_plot = function(moratoria_bans_limits) {
-        g1 <- ggplot(moratoria_bans_limits, aes(x = date, y = Policy)) + 
-                geom_bar(position="stack", stat="identity", fill = Moratoria_bans_limits) + 
-                ylab("Moratoria, Bans, & Limit Policies") +  xlab("Year") + theme_bw() + ylim(0,30) +
-                scale_fill_manual(values=c(Moratoria_bans_limits)) +
-                xlim(c(moratoria_bans_limits_min_date,moratoria_bans_limits_max_date)) + 
-                scale_x_date(date_labels = "%Y", limits=c(moratoria_bans_limits_min_date,moratoria_bans_limits_max_date)) +
-                theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10), 
-                      plot.margin = margin(5, 10, 5, 5))
-        g1
-}
-
-# function to plot cumulative Divestments by date
-cumulative_div_plot = function(divestment_new) {
-        g2 <- ggplot(divestment_new, aes(x = date, y = Policy)) + 
-                geom_bar(position="stack", stat="identity", fill = Divestment) + 
-                ylab("Divestments") +  xlab("Year") + theme_bw() + ylim(0,300) +
-                scale_fill_manual(values=c(Divestment)) +
-                xlim(c(divestment_min_date,divestment_max_date)) + 
-                scale_x_date(date_labels = "%Y", limits=c(divestment_min_date,divestment_max_date)) +
-                theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10), 
-                      plot.margin = margin(5, 10, 5, 5))
-        g2
-}
-
-# function to plot cumulative subsidy_removal by date
-cumulative_sr_plot = function(subsidy_removal) {
-        g3 <- ggplot(subsidy_removal, aes(x = date, y = Policy)) + 
-                geom_bar(position="stack", stat="identity", fill = Subsidy_removal) + 
-                ylab("Subsidy Removals") +  xlab("Year") + theme_bw() + ylim(0,8) +
-                scale_fill_manual(values=c(Subsidy_removal)) +
-                xlim(c(subsidy_removal_min_date,subsidy_removal_max_date)) + 
-                scale_x_date(date_labels = "%Y", limits=c(subsidy_removal_min_date,subsidy_removal_max_date)) +
-                theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10), 
-                      plot.margin = margin(5, 10, 5, 5))
-        g3
-}
+# # function to plot cumulative Moratoria, Bans, and Limit Policies by date
+# cumulative_mbl_plot = function(moratoria_bans_limits) {
+#         g1 <- ggplot(moratoria_bans_limits, aes(x = date, y = Policy)) + 
+#                 geom_bar(position="stack", stat="identity", fill = Moratoria_bans_limits) + 
+#                 ylab("Moratoria, Bans, & Limit Policies") +  xlab("Year") + theme_bw() + ylim(0,30) +
+#                 scale_fill_manual(values=c(Moratoria_bans_limits)) +
+#                 xlim(c(moratoria_bans_limits_min_date,moratoria_bans_limits_max_date)) + 
+#                 scale_x_date(date_labels = "%Y", limits=c(moratoria_bans_limits_min_date,moratoria_bans_limits_max_date)) +
+#                 theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10), 
+#                       plot.margin = margin(5, 10, 5, 5))
+#         g1
+# }
+# 
+# # function to plot cumulative Divestments by date
+# cumulative_div_plot = function(divestment_new) {
+#         g2 <- ggplot(divestment_new, aes(x = date, y = Policy)) + 
+#                 geom_bar(position="stack", stat="identity", fill = Divestment) + 
+#                 ylab("Divestments") +  xlab("Year") + theme_bw() + ylim(0,300) +
+#                 scale_fill_manual(values=c(Divestment)) +
+#                 xlim(c(divestment_min_date,divestment_max_date)) + 
+#                 scale_x_date(date_labels = "%Y", limits=c(divestment_min_date,divestment_max_date)) +
+#                 theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10), 
+#                       plot.margin = margin(5, 10, 5, 5))
+#         g2
+# }
+# 
+# # function to plot cumulative subsidy_removal by date
+# cumulative_sr_plot = function(subsidy_removal) {
+#         g3 <- ggplot(subsidy_removal, aes(x = date, y = Policy)) + 
+#                 geom_bar(position="stack", stat="identity", fill = Subsidy_removal) + 
+#                 ylab("Subsidy Removals") +  xlab("Year") + theme_bw() + ylim(0,8) +
+#                 scale_fill_manual(values=c(Subsidy_removal)) +
+#                 xlim(c(subsidy_removal_min_date,subsidy_removal_max_date)) + 
+#                 scale_x_date(date_labels = "%Y", limits=c(subsidy_removal_min_date,subsidy_removal_max_date)) +
+#                 theme(legend.title = element_blank(), legend.position = "", plot.title = element_text(size=10), 
+#                       plot.margin = margin(5, 10, 5, 5))
+#         g3
+# }
 
 
 ## create plotting parameters for map
@@ -432,10 +432,13 @@ state_city_breakdown_map_ffnpt = state_city_breakdown_map %>% filter(ffnpt_total
 
 
 # create base map 
-basemap = leaflet(plot_map) %>% 
+basemap = leaflet(plot_map, options = leafletOptions(zoomControl = FALSE)) %>%
+    htmlwidgets::onRender("function(el, x) {
+        L.control.zoom({ position: 'bottomright' }).addTo(this)
+    }") %>%
         addTiles() %>% 
         addLayersControl(
-                position = "topright",
+                position = "bottomleft",
                 overlayGroups = c("Cities, States, Regions", "Governmental Policies", "Non-Governmental Policies", "Fossil Fuel Non-Proliferation"),
                 options = layersControlOptions(collapsed = FALSE)) %>% 
         hideGroup(c("Cities, States, Regions", "Governmental Policies", "Non-Governmental Policies", "Fossil Fuel Non-Proliferation")) %>% 
@@ -446,7 +449,7 @@ basemap = leaflet(plot_map) %>%
     ") %>%
         addProviderTiles(providers$CartoDB.Positron) %>%
         fitBounds(~-100,-60,~60,70) %>%
-        addLegend("bottomright", colors = c("#EFEFEF", "#FCDE9C", "#BEC5A9", "#8DA8AD", "#668BA8", "#466A9F", "#2C4B93", "#062A89"), 
+        addLegend("topright", colors = c("#EFEFEF", "#FCDE9C", "#BEC5A9", "#8DA8AD", "#668BA8", "#466A9F", "#2C4B93", "#062A89"), 
                   labels =  c("No data", "1-20%", "20-40%","40-60%", "60-80%","80-90%","90-95%","95-100%"), values = ~country_overview_large$ff_share_2019_cat,
                   title = "Fossil fuels<br/>(% sub energy)<br/>2019") %>%  
         
