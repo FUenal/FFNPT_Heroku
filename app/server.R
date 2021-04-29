@@ -432,15 +432,12 @@ state_city_breakdown_map_ffnpt = state_city_breakdown_map %>% filter(ffnpt_total
 
 
 # create base map 
-basemap = leaflet(plot_map, options = leafletOptions(zoomControl = FALSE)) %>%
-    htmlwidgets::onRender("function(el, x) {
-        L.control.zoom({ position: 'bottomright' }).addTo(this)
-    }") %>%
+basemap = leaflet(plot_map) %>% 
         addTiles() %>% 
         addLayersControl(
-                position = "bottomleft",
+                position = "topright",
                 overlayGroups = c("Cities, States, Regions", "Governmental Policies", "Non-Governmental Policies", "Fossil Fuel Non-Proliferation"),
-                options = layersControlOptions(collapsed = FALSE)) %>% 
+                options = layersControlOptions(collapsed = TRUE, autoZIndex = TRUE)) %>% 
         hideGroup(c("Cities, States, Regions", "Governmental Policies", "Non-Governmental Policies", "Fossil Fuel Non-Proliferation")) %>% 
         htmlwidgets::onRender("
         function() {
@@ -449,12 +446,12 @@ basemap = leaflet(plot_map, options = leafletOptions(zoomControl = FALSE)) %>%
     ") %>%
         addProviderTiles(providers$CartoDB.Positron) %>%
         fitBounds(~-100,-60,~60,70) %>%
-        addLegend("topright", colors = c("#EFEFEF", "#FCDE9C", "#BEC5A9", "#8DA8AD", "#668BA8", "#466A9F", "#2C4B93", "#062A89"), 
+        addLegend("bottomleft", colors = c("#EFEFEF", "#FCDE9C", "#BEC5A9", "#8DA8AD", "#668BA8", "#466A9F", "#2C4B93", "#062A89"), 
                   labels =  c("No data", "1-20%", "20-40%","40-60%", "60-80%","80-90%","90-95%","95-100%"), values = ~country_overview_large$ff_share_2019_cat,
                   title = "Fossil fuels<br/>(% sub energy)<br/>2019") %>%  
         
         addPolygons(stroke = FALSE, smoothFactor = 0.4, fillOpacity = 0.65, fillColor = ~cv_pal(country_overview_large$ff_share_2019_cat),
-                    label = sprintf("<strong>%s</strong><br/><small>Percent of Fossil-Fuels (sub energy): %s </small><br/><small>Climate Risk Index: %s</small><br/><small>Total number of policies: %g</small>", 
+                    label = sprintf("<strong>%s</strong><br/><small>Fossil-Fuels Sub Energy: %s </small><br/><small>Climate Risk Index: %s</small><br/><small>Total no. of policies: %g</small>", 
                                     country_overview_large$Country, country_overview_large$ff_share_2019_cat, country_overview_large$cri, country_overview_large$Policy_total) %>% 
                             lapply(htmltools::HTML),
                     labelOptions = labelOptions(
