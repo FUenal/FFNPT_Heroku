@@ -36,7 +36,7 @@ Cities_regions_states = "#FAB733"
 FFNPT_total = "#FF9100"
 Coal = "#FF8E15"
 
-
+renv::init()
 # Added ISO-normed country codes manually into the main xlsx data sheet (sheet 8) and manually updated country 
 # names in all sheets to standard format. Cleaning & Wrangling Process is documented in the BitsBites.R file
 
