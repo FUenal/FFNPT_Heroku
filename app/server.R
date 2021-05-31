@@ -622,4 +622,12 @@ server = function(input, output) {
                 })
         })
         
+        
+        # Grey out disable
+        autoInvalidate <- reactiveTimer(10000)
+        observe({
+            autoInvalidate()
+            cat(".")
+        })
+        
 }
