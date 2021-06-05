@@ -561,7 +561,7 @@ ui <- bootstrapPage(
                                                     tabPanel("Overview", tags$article(
                                                             htmlOutput("report")
                                                     )),
-                                                    tabPanel("Moratorial, Limits, & Bans", tags$article(
+                                                    tabPanel("Moratoria, Limits, & Bans", tags$article(
                                                             htmlOutput("report1")
                                                     )),
                                                     tabPanel("Subsidy Removals", tags$article(
